@@ -1,22 +1,19 @@
 import { hot } from 'react-hot-loader/root';
+import PropTypes from 'prop-types';
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import reducer from "./reducers";
-import { createStore } from "redux"; // импорт из Redux-библиотеки
-const initialState = {  tech: 'alo' } ;
-const store = createStore(reducer, initialState);  // пока невыполнимое действие
+import store from './store'
+import { connect } from 'react-redux';
+
 
 class App extends React.Component {
-  hellaao(txt) {
-      console.log(this.state.counter);
-  }
-  render() {
+    render() {
     return (
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
-            <p>{store.getState().tech}</p>
+            <p>{store.getState().balls.length}</p>
             <a
                 className="App-link"
                 href="https://reactjs.org"
@@ -24,10 +21,12 @@ class App extends React.Component {
                 rel="noopener noreferrer"
             >
             </a>
+              <button onClick={() => store.dispatch({ type: 'ADD_BALL', ball: {radius: 10, color: 'blue'} })}>privet</button>
           </header>
         </div>
     );
   }
 }
 
-export default hot(App);
+const mapStateToProps = state => ({ balls: state.balls });
+export default hot(connect(mapStateToProps)(App));
