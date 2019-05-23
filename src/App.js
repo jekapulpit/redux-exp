@@ -37,7 +37,7 @@ class App extends React.Component {
 
     render() {
     let balls = store.getState().balls.map((ball) => {
-       return <Ball key={ball.id} onClickHandler={this.toggleActive} ballProps={ball}/>
+       return <Ball key={ball.id} onMouseDownHandler={this.toggleActive} ballProps={ball}/>
     });
     return (
         <div className="App">
