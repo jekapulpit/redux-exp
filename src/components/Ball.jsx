@@ -6,7 +6,7 @@ const Ball = props => {
     let style = {
         width: props.ballProps.radius*2 + 'px',
         height: props.ballProps.radius*2 + 'px',
-        backgroundColor: props.ballProps.color,
+        backgroundColor: props.ballProps.active ? 'red' : props.ballProps.color,
         top: props.ballProps.top,
         left: props.ballProps.left,
         transform: props.ballProps.active ? 'scale(2)' : 'none'

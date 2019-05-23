@@ -12,17 +12,22 @@ const Height = window.innerHeight;
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.toggleActive = this.toggleActive.bind(this)
+        this.toggleActivate = this.toggleActivate.bind(this);
         this.toggleDrag = this.toggleDrag.bind(this)
     }
+
     randomInteger = (min, max) => {
         let rand = min + Math.random() * (max + 1 - min);
         rand = Math.floor(rand);
         return rand;
     };
 
-    toggleActive = (ball) => {
-        this.props.toggleActive(ball)
+    toggleActivate = (ball) => {
+        this.props.toggleActivate(ball)
+    };
+
+    toggleDeactivate = () => {
+        this.props.toggleDeactivate()
     };
 
     toggleDrag = (event) => {
@@ -42,10 +47,14 @@ class App extends React.Component {
 
     render() {
     let balls = store.getState().balls.map((ball) => {
-       return <Ball key={ball.id} onMouseMoveHandler={this.toggleDrag} onMouseDownHandler={this.toggleActive} ballProps={ball}/>
+       return <Ball key={ball.id}
+                    onMouseDownHandler={this.toggleActivate}
+                    ballProps={ball}/>
     });
     return (
-        <div className="App" onMouseMove={(e) => this.toggleDrag(e)}>
+        <div className="App"
+             onMouseMove={(e) => this.toggleDrag(e)}
+             onMouseUp={() => this.toggleDeactivate()}>
           <header className="App-header">
             {balls}
             <button onClick={() => store.dispatch({ type: 'ADD_BALL', ball: this.newBallProps() })}>privet</button>
@@ -57,11 +66,14 @@ class App extends React.Component {
 
 const mapDispatchToProps = function(dispatch, ownProps) {
     return {
-        toggleActive: (ball) => {
+        toggleActivate: (ball) => {
             dispatch({ type: 'ACTIVATE', ball: ball });
         },
         toggleDrag: (event) => {
             dispatch({ type: 'DRAG', coordinates: { x: event.clientX, y: event.clientY } });
+        },
+        toggleDeactivate: () => {
+            dispatch({ type: 'DEACTIVATE' });
         },
     }
 };

@@ -3,20 +3,18 @@ export default (state = { balls: [] }, action) => {
         let newState = { ...state, balls: state.balls.concat([action.ball])};
         return newState;
     }
+
     if (action.type === 'ACTIVATE') {
         let newState = {
             ...state,
             balls: state.balls.map((ball) => {
-                if (ball.id === action.ball.id) return {
-                    ...ball,
-                    color:      'red',
-                    active:     true
-                };
+                if (ball.id === action.ball.id) return { ...ball, active: true };
                 return ball
             })
         };
         return newState;
     }
+
     if (action.type === 'DRAG') {
         let newState = {
             ...state,
@@ -27,6 +25,16 @@ export default (state = { balls: [] }, action) => {
                     left:       action.coordinates.x - ball.radius
                 };
                 return ball
+            })
+        };
+        return newState;
+    }
+
+    if (action.type === 'DEACTIVATE') {
+        let newState = {
+            ...state,
+            balls: state.balls.map((ball) => {
+                return { ...ball, active: false }
             })
         };
         return newState;
