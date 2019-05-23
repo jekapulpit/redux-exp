@@ -23,6 +23,11 @@
   color: #61dafb;
 }
 
+.ball {
+  position: absolute;
+  border-radius: 50%;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
