@@ -4,11 +4,28 @@ export default (state = { balls: [] }, action) => {
         return newState;
     }
     if (action.type === 'ACTIVATE') {
-        console.log(action.ball);
         let newState = {
             ...state,
             balls: state.balls.map((ball) => {
-                if (ball.id === action.ball.id) return { ...ball, color: 'red' };
+                if (ball.id === action.ball.id) return {
+                    ...ball,
+                    color:      'red',
+                    active:     true
+                };
+                return ball
+            })
+        };
+        return newState;
+    }
+    if (action.type === 'DRAG') {
+        let newState = {
+            ...state,
+            balls: state.balls.map((ball) => {
+                if (ball.active) return {
+                    ...ball,
+                    top:        action.coordinates.y - ball.radius,
+                    left:       action.coordinates.x - ball.radius
+                };
                 return ball
             })
         };

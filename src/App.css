@@ -26,6 +26,11 @@
 .ball {
   position: absolute;
   border-radius: 50%;
+  -webkit-transition: transform 0.3s;
+  -moz-transition: transform 0.3s;
+  -ms-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  transition: transform 0.3s;
 }
 
 @keyframes App-logo-spin {
