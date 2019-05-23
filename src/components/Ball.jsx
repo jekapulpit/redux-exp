@@ -11,7 +11,7 @@ const Ball = props => {
         left: props.ballProps.left
     };
         return (
-            <div className="ball" style={style}/>
+            <div onClick={() => props.onClickHandler(props.ballProps)} className="ball" style={style}/>
         );
 };
 
