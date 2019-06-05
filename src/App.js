@@ -5,6 +5,7 @@ import './App.css';
 import store from './store'
 import { connect } from 'react-redux';
 import Ball from "./components/Ball";
+import rigitBody from "./engine/rigitBody";
 
 const Width = window.innerWidth;
 const Height = window.innerHeight;
@@ -34,15 +35,16 @@ class App extends React.Component {
         this.props.toggleDrag(event)
     };
 
-    newBallProps = (radius = 10, color = '#fff') => {
-        return {
+    newBallProps = (radius = 10, mass = 1000, color = '#fff') => {
+        return (new rigitBody({
             id: this.randomInteger(0, 100000000),
             radius: radius,
             color: color,
+            mass: mass,
             top: this.randomInteger(radius*2, Height - radius*2),
             left: this.randomInteger(radius*2, Width - radius*2),
             active: false
-        }
+        }))
     };
 
     render() {
