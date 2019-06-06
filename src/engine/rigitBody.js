@@ -8,6 +8,9 @@ class rigitBody {
         this.left = object.left;
         this.active = object.active;
         this.force = object.mass;
+        this.speed = 0;
+        this.fall = this.fall.bind(this);
+        this.timer = setInterval(this.fall, 0.1)
     }
 
     setColor = (color) => {
@@ -29,6 +32,10 @@ class rigitBody {
     deactivate = () => {
         this.active = false;
         return this
+    };
+
+    fall = () => {
+            this.top += 1;
     };
 }
 
