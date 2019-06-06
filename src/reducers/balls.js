@@ -30,7 +30,8 @@ export default (state = { balls: [] }, action) => {
         let newState = {
             ...state,
             balls: state.balls.map((ball) => {
-                return ball.deactivate()
+                if (ball.id === action.ball.id) return ball.deactivate();
+                return ball
             })
         };
         return newState;

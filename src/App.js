@@ -6,14 +6,13 @@ import store from './store'
 import { connect } from 'react-redux';
 import Ball from "./components/Ball";
 import rigitBody from "./engine/rigitBody";
-
-const Width = window.innerWidth;
-const Height = window.innerHeight;
+import Field from './field'
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.toggleActivate = this.toggleActivate.bind(this);
+        this.toggleDeactivate = this.toggleDeactivate.bind(this);
         this.toggleDrag = this.toggleDrag.bind(this)
     }
 
@@ -27,8 +26,8 @@ class App extends React.Component {
         this.props.toggleActivate(ball)
     };
 
-    toggleDeactivate = () => {
-        this.props.toggleDeactivate()
+    toggleDeactivate = (ball) => {
+        this.props.toggleDeactivate(ball)
     };
 
     toggleDrag = (event) => {
@@ -41,8 +40,8 @@ class App extends React.Component {
             radius: radius,
             color: color,
             mass: mass,
-            top: this.randomInteger(radius*2, Height - radius*2),
-            left: this.randomInteger(radius*2, Width - radius*2),
+            top: this.randomInteger(radius*2, Field.Height - radius*2),
+            left: this.randomInteger(radius*2, Field.Width - radius*2),
             active: false
         }))
     };
@@ -51,12 +50,12 @@ class App extends React.Component {
     let balls = store.getState().balls.map((ball) => {
        return <Ball key={ball.id}
                     onMouseDownHandler={this.toggleActivate}
+                    onMouseUpHandler={this.toggleDeactivate}
                     ballProps={ball}/>
     });
     return (
         <div className="App"
-             onMouseMove={(e) => this.toggleDrag(e)}
-             onMouseUp={() => this.toggleDeactivate()}>
+             onMouseMove={(e) => this.toggleDrag(e)}>
           <header className="App-header">
             {balls}
             <button onClick={() => store.dispatch({ type: 'ADD_BALL', ball: this.newBallProps() })}>privet</button>
@@ -74,8 +73,8 @@ const mapDispatchToProps = function(dispatch, ownProps) {
         toggleDrag: (event) => {
             dispatch({ type: 'DRAG', coordinates: { x: event.clientX, y: event.clientY } });
         },
-        toggleDeactivate: () => {
-            dispatch({ type: 'DEACTIVATE' });
+        toggleDeactivate: (ball) => {
+            dispatch({ type: 'DEACTIVATE', ball: ball });
         },
     }
 };

@@ -13,6 +13,7 @@ const Ball = props => {
     };
         return (
             <div onMouseDown={() => props.onMouseDownHandler(props.ballProps)}
+                 onMouseUp={() => props.onMouseUpHandler(props.ballProps)}
                  className="ball"
                  style={style}/>
         );

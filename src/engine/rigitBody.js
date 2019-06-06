@@ -1,3 +1,5 @@
+import Field from '../field'
+
 class rigitBody {
     constructor(object) {
         this.id = object.id;
@@ -10,8 +12,18 @@ class rigitBody {
         this.force = object.mass;
         this.speed = 0;
         this.fall = this.fall.bind(this);
-        this.timer = setInterval(this.fall, 0.1)
+        this.startFall = this.startFall.bind(this);
+        this.stopFall = this.stopFall.bind(this);
+        this.startFall();
     }
+
+    startFall = () => {
+        this.timer = setInterval(this.fall, 0.1)
+    };
+
+    stopFall = () => {
+        this.timer = clearInterval(this.timer);
+    };
 
     setColor = (color) => {
         this.color = color;
@@ -26,16 +38,23 @@ class rigitBody {
 
     activate = () => {
         this.active = true;
+        this.stopFall();
         return this
     };
 
     deactivate = () => {
         this.active = false;
+        if(!this.timer)
+            this.startFall();
         return this
     };
 
+
+
     fall = () => {
-            this.top += 1;
+        if (this.top >= Field.Height - this.radius*2)
+            this.stopFall();
+        this.top += 0.3;
     };
 }
 
