@@ -23,6 +23,7 @@ class rigitBody {
 
     stopFall = () => {
         this.timer = clearInterval(this.timer);
+        this.speed = 0;
     };
 
     setColor = (color) => {
@@ -54,7 +55,8 @@ class rigitBody {
     fall = () => {
         if (this.top >= Field.Height - this.radius*2)
             this.stopFall();
-        this.top += 0.3;
+        this.top += this.speed/1000;
+        this.speed += this.mass/1000;
     };
 }
 
