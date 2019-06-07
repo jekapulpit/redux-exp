@@ -8,7 +8,7 @@ export default (state = { balls: [] }, action) => {
         let newState = {
             ...state,
             balls: state.balls.map((ball) => {
-                if (ball.id === action.ball.id) return { ...ball, active: true };
+                if (ball.id === action.ball.id) return ball.activate();
                 return ball
             })
         };
@@ -19,11 +19,7 @@ export default (state = { balls: [] }, action) => {
         let newState = {
             ...state,
             balls: state.balls.map((ball) => {
-                if (ball.active) return {
-                    ...ball,
-                    top:        action.coordinates.y - ball.radius,
-                    left:       action.coordinates.x - ball.radius
-                };
+                if (ball.active) return ball.moveTo(action.coordinates.x - ball.radius, action.coordinates.y - ball.radius);
                 return ball
             })
         };
@@ -34,7 +30,8 @@ export default (state = { balls: [] }, action) => {
         let newState = {
             ...state,
             balls: state.balls.map((ball) => {
-                return { ...ball, active: false }
+                if (ball.id === action.ball.id) return ball.deactivate();
+                return ball
             })
         };
         return newState;
